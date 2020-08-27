@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import ListItems from './ListItems'
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -24,7 +24,7 @@ class App extends React.Component{
   handleInput(e){
     this.setState({
       currentItem:{
-        text: e.target.vale, 
+        text: e.target.value, 
         key: Date.now()
       }
     })
@@ -33,11 +33,10 @@ class App extends React.Component{
   addItem(e){
     e.preventDefault();
     const newItem = this.state.currentItem;
-    console.log(newItem);
-    if(newItem !==""){
-      const newItems=[...this.state.items, newItem];
+    if(newItem.text !==""){
+      const items=[...this.state.items, newItem];
       this.setState({
-        this:newItems,
+        items: items,
         currentItem :{
           text:"",
           key:""
@@ -56,10 +55,10 @@ class App extends React.Component{
 
   render(){
     return(
-     <div className="App">
-        <header>
-          <form id="to-do-form" onSubmit={this.addItem}>
-            <input type="text" placeholder="Enter text" value={this.state.currentItem.text} onChange={this.handleInput} />
+      <div className="App">
+      <header>
+        <form id="to-do-form" onSubmit={this.addItem}>
+          <input type="text" placeholder="Enter task" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
             <button type="submit">Add</button>
           </form>
         </header>
