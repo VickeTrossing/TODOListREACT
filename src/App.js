@@ -20,7 +20,9 @@ class App extends React.Component{
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.setUpdate = this.setUpdate.bind(this);
   }
+
   handleInput(e){
     this.setState({
       currentItem:{
@@ -46,23 +48,40 @@ class App extends React.Component{
   }
 
   deleteItem(key){
-    const filteredItems = this.state.items.filter(item => item.key!==key);
+    const filteredItems= this.state.items.filter(item =>
+      item.key!==key);
     this.setState({
-      items:filteredItems
+      items: filteredItems
     })
+
   }
 
+  setUpdate(text, key){
+    const items = this.state.items;
+    items.map(item =>{
+      if(item.key===key){
+        console.log("Cyka Blyat");
+        item.text=text;
+      }
+    })
+    this.setState({
+      items: items
+    })
+  }
 
   render(){
     return(
       <div className="App">
-      <header>
-        <form id="to-do-form" onSubmit={this.addItem}>
-          <input type="text" placeholder="Enter task" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
+        <header>
+          <form id="to-do-form" onSubmit={this.addItem}>
+            <input type="text" placeholder="Enter task" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
             <button type="submit">Add</button>
           </form>
+          <p>{this.state.items.text}</p>
+
+          <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate}/>
+          
         </header>
-    <ListItems items = {this.state.items} deleteItem={this.delteItem}/>
      </div>
     );
   }

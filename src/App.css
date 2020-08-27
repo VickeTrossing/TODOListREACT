@@ -1,12 +1,13 @@
 body{
-  background: #a8a8a8;
+  background-image: url(Firefox_wallpaper.png);
 }
 
 .App{
-  background-color: #706b7a;
+  background-color: #5b5370;
+  opacity: 10;
   min-height: 500px;
   width: 400px;
-  margin: 40px auto;
+  margin: 200px auto;
   border-radius: 7px;
 }
 
@@ -31,7 +32,7 @@ body{
   width: 80px;
   border-radius: 5px;
   border: 0;
-  background-color: rgb(202,156,24);
+  background-color: rgb(77, 77, 77);
   cursor: pointer;
   font-weight: bolder;
   color: #fff;
