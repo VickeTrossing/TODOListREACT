@@ -24,6 +24,15 @@
     color: rgb(170, 0, 0);
 }
 
+
+.faicons :hover{
+    color: rgb(233, 0, 0);
+}
+
+.faicons :active{
+    color: rgb(114, 0, 0);
+}
+
 .list p input{
     background-color: transparent;
     border: 0;
