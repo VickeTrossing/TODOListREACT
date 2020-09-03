@@ -4,27 +4,21 @@ import './App.css';
 import ListItems from './ListItems'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {faTrash} from '@fortawesome/free-solid-svg-icons' 
+import { DB_CONFIG } from './Config/config.js'
 import * as firebase from 'firebase';
 
-// var config = {
-//   apiKey: "AIzaSyDIW_W_0jdaffMD2yRdcljQo4WNkg3yZoU",
-//   authDomain: "todoreact-c486d.firebaseapp.com",
-//   databaseURL: "https://todoreact-c486d.firebaseio.com",
-//   projectId: "todoreact-c486d",
-//   storageBucket: "todoreact-c486d.appspot.com",
-//   messagingSenderId: "650739750861",
-//   appId: "1:650739750861:web:3767616263503f9f5a1684",
-//   measurementId: "G-0HRENKS3PY"
-// };
 
-
-// firebase.initializeApp(config);
 
 library.add(faTrash);
 
 class App extends React.Component{
   constructor(props){
     super(props);
+
+
+    this.app = !firebase.apps.length ? firebase.initializeApp(DB_CONFIG) : firebase.app();
+    this.db = this.app.database().ref().child('notes');
+
     this.state={
       items:[],
       currentItem:{
@@ -83,6 +77,37 @@ class App extends React.Component{
       items: items
     })
   }
+
+  // componentDidMount(){
+  //   const rootRef = firebase.database().ref().child('react');
+  //   const todoRef = rootRef.child('speed');
+  //   todoRef.on('value', snap =>{
+  //     this.setState({
+  //       text: snap.val(), 
+  //       key: ""
+  //     })
+  //   });
+  // }
+
+
+//   add_task(){
+//         let key = firebase.database().ref().child("unfinished_task").push().key;
+//         let task = {
+//             title: input_box.value,
+//             date: input_date.value,
+//             key: key
+//         };
+
+//         let updates = {};
+//         updates["/unfinished_task/" + key] = task;
+//         firebase.database().ref().update(updates);
+//         create_unfinished_task();
+    
+// }
+
+
+
+
 
   render(){
     return(
