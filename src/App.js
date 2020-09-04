@@ -1,11 +1,12 @@
 import React from 'react';
-//import logo from './logo.svg';
 import './App.css';
-import ListItems from './ListItems'
+import ListItems from './Components/ListItem/ListItems';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {faTrash} from '@fortawesome/free-solid-svg-icons' 
-import { DB_CONFIG } from './Config/config.js'
-import * as firebase from 'firebase';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import { DB_CONFIG } from './Config/config.js';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+
 
 
 
@@ -15,11 +16,21 @@ class App extends React.Component{
   constructor(props){
     super(props);
 
+    this.addNote = this.addNote.bind(this);
 
     this.app = !firebase.apps.length ? firebase.initializeApp(DB_CONFIG) : firebase.app();
-    this.db = this.app.database().ref().child('notes');
+    this.database = this.app.database().ref().child('notes');
+
+  //   database.on('value', snapshot =>{
+  //     this.setState({
+  //       data: snapshot.val()
+  //     })
+  //  });
+ 
 
     this.state={
+      test: "test",
+      notes: [],
       items:[],
       currentItem:{
         text:"",
@@ -30,7 +41,22 @@ class App extends React.Component{
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
+    this.addNote = this.addNote.bind(this);
   }
+
+
+  componentDidMount(){
+    const dbRef = firebase.database().ref().child('notes');
+    const testRef = dbRef.child('test');
+    testRef.on('value', snap => {
+      this.setState({
+        test: snap.val()
+      })
+    })
+  }
+
+  
+
 
   handleInput(e){
     this.setState({
@@ -41,8 +67,19 @@ class App extends React.Component{
     })
   }
 
-  addItem(e){
-    e.preventDefault();
+
+  addNote(note){
+    this.database.push().set({ noteContent: note});
+  }
+
+  addItem(note){
+
+    //this.database.push().set({noteContent: note});
+
+
+
+
+    note.preventDefault();
     const newItem = this.state.currentItem;
     if(newItem.text !==""){
       const items=[...this.state.items, newItem];
@@ -60,6 +97,7 @@ class App extends React.Component{
     const filteredItems= this.state.items.filter(item =>
       item.key!==key);
     this.setState({
+      
       items: filteredItems
     })
 
@@ -78,50 +116,33 @@ class App extends React.Component{
     })
   }
 
-  // componentDidMount(){
-  //   const rootRef = firebase.database().ref().child('react');
-  //   const todoRef = rootRef.child('speed');
-  //   todoRef.on('value', snap =>{
-  //     this.setState({
-  //       text: snap.val(), 
-  //       key: ""
-  //     })
-  //   });
-  // }
-
-
-//   add_task(){
-//         let key = firebase.database().ref().child("unfinished_task").push().key;
-//         let task = {
-//             title: input_box.value,
-//             date: input_date.value,
-//             key: key
-//         };
-
-//         let updates = {};
-//         updates["/unfinished_task/" + key] = task;
-//         firebase.database().ref().update(updates);
-//         create_unfinished_task();
-    
-// }
-
-
 
 
 
   render(){
     return(
       <div className="App">
-        <header>
+        <div className="App-header" id="top">
           <form id="to-do-form" onSubmit={this.addItem}>
-            <input type="text" placeholder="Enter TODO" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
-            <button type="submit">Add</button>
+              <input type="text" placeholder="Enter TODO" value= {this.state.currentItem.text} onChange={this.handleInput}></input>
+              <button type="submit">Add</button>
           </form>
           <p>{this.state.items.text}</p>
+        </div>
 
-          <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate}/>
+        <div className="App-body" id="below">
+          <header>
+            
           
-        </header>
+            
+            
+
+            <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate}/>
+      
+          
+            
+          </header>
+       </div>
      </div>
     );
   }
