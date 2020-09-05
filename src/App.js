@@ -7,10 +7,6 @@ import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import PostQuotes from './Quotes/PostQuotes'
 
 
-
-
-
-
 library.add(faTrash);
 
 class App extends React.Component{
@@ -24,20 +20,10 @@ class App extends React.Component{
         key:""
       }
     }
-
-
-
-   
-
-
-
-
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
-
-    
   }
 
 
@@ -48,8 +34,6 @@ class App extends React.Component{
   }
 
 
-
-
   handleInput(e){
     this.setState({
       currentItem:{
@@ -58,9 +42,6 @@ class App extends React.Component{
       }
     })
   }
-
-
-
 
   addItem(note){
 
@@ -100,9 +81,6 @@ class App extends React.Component{
       items: items
     })
   }
-
-
-
 
   render(){
     return(
