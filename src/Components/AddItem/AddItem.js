@@ -2,6 +2,27 @@ import React from 'react';
 
 
 class AddItem extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+          notes: [],
+          items:[],
+          currentItem:{
+            text:"",
+            key:""
+          }
+        }
+        this.handleInput = this.handleInput.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
+        this.setUpdate = this.setUpdate.bind(this);
+    
+        
+      }
+
+
+
     handleInput(e){
         this.setState({
           currentItem:{
