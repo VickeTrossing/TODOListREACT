@@ -122,7 +122,7 @@ class App extends React.Component{
        </div>
 
       <div className="Quotes">
-        <h2>Quote of the day</h2>
+        <h2>Quote of the day:</h2>
         <PostQuotes/>
       </div>
 
